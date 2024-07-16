@@ -2,9 +2,45 @@ import { createContext, useState, useRef, useEffect, ReactNode } from "react";
 import { io } from "socket.io-client";
 import Peer from "simple-peer";
 
-const SocketContext = createContext({});
+const SocketContext = createContext<{
+  call: {
+    isReceivingCall: boolean;
+    from: string;
+    name: string;
+    signal: string;
+  };
+  callAccepted: boolean;
+  myVideo: { current?: HTMLVideoElement };
+  userVideo: { current?: HTMLVideoElement };
+  stream?: MediaStream;
+  name: string;
+  setName: (name: string) => void;
+  callEnded: boolean;
+  me: string;
+  callUser: (id: string) => void;
+  leaveCall: () => void;
+  answerCall: () => void;
+}>({
+  call: {
+    isReceivingCall: false,
+    from: "",
+    name: "",
+    signal: "",
+  },
+  callAccepted: false,
+  myVideo: { current: undefined },
+  userVideo: { current: undefined },
+  stream: undefined,
+  name: "",
+  setName: () => {},
+  callEnded: false,
+  me: "",
+  callUser: () => {},
+  leaveCall: () => {},
+  answerCall: () => {},
+});
 
-const socket = io("http://localhost:5000");
+const socket = io("http://localhost:3000");
 
 const ContextProvider = ({ children }: { children: ReactNode }) => {
   const [stream, setStream] = useState<MediaStream>();
