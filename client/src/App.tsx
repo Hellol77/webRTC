@@ -36,7 +36,7 @@ const App = () => {
     <div className={classes.wrapper}>
       <AppBar className={classes.appBar} position="static" color="inherit">
         <Typography variant="h2" align="center">
-          video call
+          영상 통화
         </Typography>
       </AppBar>
       <VideoPlayer />
